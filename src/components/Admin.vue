@@ -84,7 +84,7 @@ const amountLeft = computed(() => Math.max(100000 - moneyDonated.value, 0));
 
 
 
-const SHOTS_API_URL = '/api/shots'; // local serverless endpoint
+const SHOTS_API_URL = '/api/shots'; // <- use the same serverless function as Leaderboard
 
 const fetchShots = async () => {
   try {
@@ -105,13 +105,15 @@ const saveShots = async () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ totalShots: totalShots.value }),
     });
+
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
+    const result = await response.json();
     store.totalShots = totalShots.value;
   } catch (err) {
     console.error('Error saving shots:', err);
   }
 };
+
 
 
 
