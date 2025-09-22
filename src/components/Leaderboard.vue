@@ -164,8 +164,8 @@ Progressbar
 import { onMounted, onUnmounted, computed } from 'vue';
 import { store } from '../store.js';
 
-// const SHOTS_API_URL = '/api/shots';
-const SHOTS_API_URL = import.meta.env.VITE_SHOTS_API_URL;
+const SHOTS_API_URL = '/api/shots';
+// const SHOTS_API_URL = import.meta.env.VITE_SHOTS_API_URL;
 
 
 let intervalId = null;

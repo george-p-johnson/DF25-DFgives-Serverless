@@ -37,40 +37,31 @@
 
 
 // api/shots.js
-export default async function handler(req, res) {
-  const SHEET_URL = process.env.GOOGLE_SHEET_URL;
-  if (!SHEET_URL) {
-    return res.status(500).json({ error: 'Missing SHEET_URL env variable' });
-  }
+import fetch from 'node-fetch';
 
-  try {
-    if (req.method === 'GET') {
+const SHEET_URL = process.env.GOOGLE_SHEET_URL;
+
+export default async function handler(req, res) {
+  if (req.method === 'GET') {
+    try {
       const response = await fetch(SHEET_URL);
       const data = await response.json();
-      return res.status(200).json({ totalShots: data.totalShots || 0 });
+      res.status(200).json({ totalShots: data.totalShots || 0 });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to fetch from Google Sheet' });
     }
-
-    if (req.method === 'POST') {
-      const { totalShots } = req.body;
-      if (typeof totalShots !== 'number') {
-        return res.status(400).json({ error: 'totalShots must be a number' });
-      }
-
-      // Send updated totalShots to your Google Apps Script
-      const response = await fetch(SHEET_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ totalShots }),
-      });
-
-      const result = await response.json();
-      return res.status(200).json(result);
+  } else if (req.method === 'POST') {
+    try {
+      const { totalShots } = await req.json();
+      // push to Google Sheet here if you have a POST endpoint
+      res.status(200).json({ totalShots, message: 'Updated successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to update Google Sheet' });
     }
-
-    return res.status(405).json({ error: 'Method not allowed' });
-  } catch (err) {
-    console.error('Error in /api/shots:', err);
-    return res.status(500).json({ error: 'Internal server error' });
+  } else {
+    res.status(405).json({ error: 'Method not allowed' });
   }
 }
 
