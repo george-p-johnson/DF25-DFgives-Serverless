@@ -36,31 +36,43 @@
 // }
 
 
+// api/shots.js
 export default async function handler(req, res) {
   const SHEET_URL = process.env.GOOGLE_SHEET_URL;
-
-  if (!SHEET_URL) return res.status(500).json({ error: 'GOOGLE_SHEET_URL not set' });
+  if (!SHEET_URL) {
+    return res.status(500).json({ error: 'Missing SHEET_URL env variable' });
+  }
 
   try {
-    const options = {
-      method: req.method,
-      headers: { 'Content-Type': 'application/json' },
-      body: req.method === 'POST' ? JSON.stringify(req.body) : undefined,
-    };
-
-    const response = await fetch(SHEET_URL, options);
-
-    if (!response.ok) {
-      const text = await response.text();
-      return res.status(500).json({ error: `Apps Script error: ${text}` });
+    if (req.method === 'GET') {
+      const response = await fetch(SHEET_URL);
+      const data = await response.json();
+      return res.status(200).json({ totalShots: data.totalShots || 0 });
     }
 
-    const data = await response.json();
-    res.status(200).json(data);
+    if (req.method === 'POST') {
+      const { totalShots } = req.body;
+      if (typeof totalShots !== 'number') {
+        return res.status(400).json({ error: 'totalShots must be a number' });
+      }
+
+      // Send updated totalShots to your Google Apps Script
+      const response = await fetch(SHEET_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ totalShots }),
+      });
+
+      const result = await response.json();
+      return res.status(200).json(result);
+    }
+
+    return res.status(405).json({ error: 'Method not allowed' });
   } catch (err) {
-    console.error('Serverless fetch error:', err);
-    res.status(500).json({ error: 'Failed to fetch from Apps Script' });
+    console.error('Error in /api/shots:', err);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }
+
 
 
