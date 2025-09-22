@@ -59,7 +59,7 @@ import { ref, onMounted, computed } from 'vue';
 import { store } from '../store.js';
 
 // const SHOTS_API_URL = '/api/shots';
-const SHOTS_API_URL = import.meta.env.VITE_SHOTS_API_URL;
+// const SHOTS_API_URL = import.meta.env.VITE_SHOTS_API_URL;
 
 
 
@@ -79,18 +79,39 @@ const amountLeft = computed(() => Math.max(100000 - moneyDonated.value, 0));
 //     console.error('Error fetching shots:', err);
 //   }
 // };
+
+
+
+
+
+const SHOTS_API_URL = '/api/shots'; // local serverless endpoint
+
 const fetchShots = async () => {
   try {
-    // fetch directly from your Apps Script
     const response = await fetch(SHOTS_API_URL);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    store.totalShots = data.totalShots ?? 0;
+    totalShots.value = data.totalShots ?? 0;
+    store.totalShots = totalShots.value;
   } catch (err) {
     console.error('Error fetching shots:', err);
   }
 };
 
+const saveShots = async () => {
+  try {
+    const response = await fetch(SHOTS_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ totalShots: totalShots.value }),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    store.totalShots = totalShots.value;
+  } catch (err) {
+    console.error('Error saving shots:', err);
+  }
+};
 
 
 
@@ -117,20 +138,7 @@ const fetchShots = async () => {
 //   }
 // };
 
-const saveShots = async () => {
-  try {
-    const response = await fetch(SHOTS_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ totalShots: totalShots.value }),
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const result = await response.json();
-    store.totalShots = totalShots.value;
-  } catch (err) {
-    console.error('Error saving shots:', err);
-  }
-};
+
 
 
 onMounted(fetchShots);

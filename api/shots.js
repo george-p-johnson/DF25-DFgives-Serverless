@@ -37,21 +37,24 @@
 
 
 
+// api/shots.js
 export default async function handler(req, res) {
-  const SHEET_URL = process.env.GOOGLE_SHEET_URL;
+  const SHEET_URL = process.env.GOOGLE_SHEET_URL; // your Apps Script URL
 
   try {
-    const fetchOptions = {
+    const options = {
       method: req.method,
       headers: { 'Content-Type': 'application/json' },
-      body: req.method === 'POST' ? JSON.stringify(req.body) : undefined
+      body: req.method === 'POST' ? JSON.stringify(req.body) : undefined,
     };
 
-    const response = await fetch(SHEET_URL, fetchOptions);
+    const response = await fetch(SHEET_URL, options);
     const data = await response.json();
+
     res.status(200).json(data);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to fetch from Google Sheets' });
+    console.error('Serverless fetch error:', err);
+    res.status(500).json({ error: 'Failed to fetch from Google Sheet' });
   }
 }
+
