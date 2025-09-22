@@ -1,0 +1,33 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+html, body {
+    height: 512px; 
+    width: 896px;
+    padding: 0;
+    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    overscroll-behavior: none; 
+}
+
+/*=========================================================
+
+AvantGardeForSalesforce-Demi
+
+=========================================================*/
+@font-face {
+    font-family: 'AvantGardeForSalesforce-Demi';
+    src: url('/fonts/AvantGardeForSalesforce-Demi.otf');
+    src: url('/fonts/AvantGardeForSalesforceW05-Dm.woff') format('woff'),
+         url('/fonts/AvantGardeForSalesforce-Demi.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
