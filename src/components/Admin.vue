@@ -58,7 +58,9 @@ button:active { transform: translateY(1px); }
 import { ref, onMounted, computed } from 'vue';
 import { store } from '../store.js';
 
-const SHOTS_API_URL = '/api/shots';
+// const SHOTS_API_URL = '/api/shots';
+const SHOTS_API_URL = import.meta.env.VITE_SHOTS_API_URL;
+
 
 
 const totalShots = ref(0);
@@ -66,17 +68,54 @@ const totalShots = ref(0);
 const moneyDonated = computed(() => (totalShots.value || 0) * 5);
 const amountLeft = computed(() => Math.max(100000 - moneyDonated.value, 0));
 
+// const fetchShots = async () => {
+//   try {
+//     const response = await fetch(SHOTS_API_URL);
+//     if (!response.ok) throw new Error(`HTTP ${response.status}`);
+//     const data = await response.json();
+//     totalShots.value = data.totalShots ?? 0;
+//     store.totalShots = totalShots.value;
+//   } catch (err) {
+//     console.error('Error fetching shots:', err);
+//   }
+// };
 const fetchShots = async () => {
   try {
+    // fetch directly from your Apps Script
     const response = await fetch(SHOTS_API_URL);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    totalShots.value = data.totalShots ?? 0;
-    store.totalShots = totalShots.value;
+    store.totalShots = data.totalShots ?? 0;
   } catch (err) {
     console.error('Error fetching shots:', err);
   }
 };
+
+
+
+
+
+
+
+
+// const saveShots = async () => {
+//   try {
+//     const response = await fetch(SHOTS_API_URL, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ totalShots: totalShots.value }),
+//     });
+//     if (!response.ok) {
+//       const text = await response.text();
+//       throw new Error(`HTTP ${response.status}: ${text}`);
+//     }
+//     const result = await response.json();
+//     console.log('Shots saved:', result);
+//     store.totalShots = totalShots.value;
+//   } catch (err) {
+//     console.error('Error saving shots:', err);
+//   }
+// };
 
 const saveShots = async () => {
   try {
@@ -85,17 +124,14 @@ const saveShots = async () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ totalShots: totalShots.value }),
     });
-    if (!response.ok) {
-      const text = await response.text();
-      throw new Error(`HTTP ${response.status}: ${text}`);
-    }
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const result = await response.json();
-    console.log('Shots saved:', result);
     store.totalShots = totalShots.value;
   } catch (err) {
     console.error('Error saving shots:', err);
   }
 };
+
 
 onMounted(fetchShots);
 </script>

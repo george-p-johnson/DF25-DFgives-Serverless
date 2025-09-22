@@ -164,12 +164,26 @@ Progressbar
 import { onMounted, onUnmounted, computed } from 'vue';
 import { store } from '../store.js';
 
-const SHOTS_API_URL = '/api/shots';
+// const SHOTS_API_URL = '/api/shots';
+const SHOTS_API_URL = import.meta.env.VITE_SHOTS_API_URL;
+
 
 let intervalId = null;
 
+// const fetchShots = async () => {
+//   try {
+//     const response = await fetch(SHOTS_API_URL);
+//     if (!response.ok) throw new Error(`HTTP ${response.status}`);
+//     const data = await response.json();
+//     store.totalShots = data.totalShots ?? 0;
+//   } catch (err) {
+//     console.error('Error fetching shots:', err);
+//   }
+// };
+
 const fetchShots = async () => {
   try {
+    // fetch directly from your Apps Script
     const response = await fetch(SHOTS_API_URL);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
@@ -178,7 +192,6 @@ const fetchShots = async () => {
     console.error('Error fetching shots:', err);
   }
 };
-
 
 
 

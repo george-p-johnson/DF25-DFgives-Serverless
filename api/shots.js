@@ -1,6 +1,9 @@
 // api/shots.js
 export default async function handler(req, res) {
-  const SHEET_URL = process.env.GOOGLE_SHEET_URL; 
+//   const SHEET_URL = process.env.GOOGLE_SHEET_URL; 
+const SHOTS_API_URL = import.meta.env.VITE_SHOTS_API_URL;
+
+  
   // Example: published Apps Script endpoint that already works with GET & POST
 
   try {
