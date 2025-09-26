@@ -1,6 +1,6 @@
-<template>
+<!-- <template>
     <div id="container">
-        <!-- Leaderboard-style entries -->
+        
         <div>
             <ul>
                 <h2 id="header">Shot Challenge</h2>
@@ -15,7 +15,6 @@
         </div>
 
 
-        <!-- Progress Bar Section -->
         <div id="progressbar-wrapper">
             <h3 id="goal">Goal<br><span id="goal-amount">$100k</span></h3>
             <div class="progress-container">
@@ -28,7 +27,36 @@
         </div>
  
     </div>
+</template> -->
+
+<template>
+  <div id="container">
+    <!-- Leaderboard-style entries -->
+    <div>
+      <ul>
+        <h2 id="header">Shot Challenge</h2>
+        <li v-for="(entry, index) in entries" :key="index" class="leaderboard-item">
+          <div class="info">
+            <span class="name">{{ entry.name }}</span>
+            <span class="score">{{ entry.value }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Progress Bar Section -->
+    <div id="progressbar-wrapper">
+      <h3 id="goal">Goal<br><span id="goal-amount">$100k</span></h3>
+      <div class="progress-container">
+        <div class="progress-bar" :style="{ height: progressPercent + '%' }"></div>
+        <div class="progress-label">
+          ${{ moneyDonated.toLocaleString() }} <span id="raised">Raised</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+
 
 <style scoped>
 #container {
