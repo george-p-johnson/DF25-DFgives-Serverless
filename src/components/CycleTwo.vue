@@ -1,15 +1,15 @@
 <template>
   <div class="image-page">
-    <img src="@/assets/image1.jpg" alt="Image One" />
+    <img src="/img/Leader-2.png" alt="Image Two" />
   </div>
 </template>
 
 <style scoped>
 .image-page {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; */
 }
 .image-page img {
   max-width: 100%;
