@@ -259,8 +259,8 @@ const progressPercent = computed(() =>
 );
 
 const entries = computed(() => [
-  { name: 'Total Shots Made', value: totalShots.value.toLocaleString() },
-  { name: 'Money Donated', value: `$${moneyDonated.value.toLocaleString()}` }
+  { name: 'Total baskets', value: totalShots.value.toLocaleString() },
+  { name: 'Amount raised', value: `$${moneyDonated.value.toLocaleString()}` }
 ]);
 </script>
 
