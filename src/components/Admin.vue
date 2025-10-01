@@ -39,7 +39,9 @@
   display: table;
   max-width: 600px;
   padding: 20px;
+  background-color: #fff;
 }
+
 h2 { text-align: center; margin-bottom: 30px; }
 h3 { text-align: center; margin: 20px 0 10px 0; color: #333; }
 .section { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
