@@ -5,7 +5,7 @@
 [[redirects]]
   from = "/api/shots"
   to = "https://script.google.com/macros/s/AKfycbzJwnfOg5IK_YOjCEil2Ix-piAU-IlYKoG1X5lmeTA3R1pQ5zFMS-nKJmVOgCKeGDE3/exec"
-  status = 200!
+  status = "200!"
 
 [[redirects]]
   from = "/*"
