@@ -4,10 +4,12 @@
 
 [[redirects]]
   from = "/api/shots"
-  to = "https://script.google.com/macros/s/AKfycbx3Ve1GOp90lyHgugxSZ7uSVMJaq6a4bXqCd-Imn0O5MikCV1010kjBLlIBQAHTfGFf/exec"
+  to = "  https://script.google.com/macros/s/AKfycbzJwnfOg5IK_YOjCEil2Ix-piAU-IlYKoG1X5lmeTA3R1pQ5zFMS-nKJmVOgCKeGDE3/exec"
   status = 200
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200!
+
+
