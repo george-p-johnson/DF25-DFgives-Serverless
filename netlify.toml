@@ -1,4 +1,3 @@
-# This is a comment
 [build]
   command = "npm run build"
   publish = "dist"
@@ -7,9 +6,10 @@
   from = "/api/shots"
   to = "https://script.google.com/macros/s/AKfycbzJwnfOg5IK_YOjCEil2Ix-piAU-IlYKoG1X5lmeTA3R1pQ5zFMS-nKJmVOgCKeGDE3/exec"
   status = 200
-  force = true
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+
